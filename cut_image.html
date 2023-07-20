@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>图片九宫格切分</title>
+</head>
+<body>
+    <h1>图片九宫格切分</h1>
+    <input type="file" id="uploadImage" accept="image/*">
+    <button onclick="uploadImage()">切分图片</button>
+    <div id="output"></div>
+
+    <script>
+        function uploadImage() {
+            var input = document.getElementById('uploadImage');
+            var file = input.files[0];
+
+            if (!file) {
+                alert('请选择要上传的图片文件！');
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append('image', file);
+
+            var outputFolder = "path_to_your_output_folder"; // 替换为你希望保存图片的路径
+            formData.append('output_folder', outputFolder);
+
+            fetch('/split_image', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    displayMessage(data.message);
+                }
+            })
+            .catch(error => {
+                alert('发生错误：' + error);
+            });
+        }
+
+        function displayMessage(message) {
+            var outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = '<p>' + message + '</p>';
+        }
+    </script>
+</body>
+</html>
