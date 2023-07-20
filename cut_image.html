@@ -22,7 +22,7 @@
             var formData = new FormData();
             formData.append('image', file);
 
-            fetch('/split_image', {
+            fetch('http://139.84.166.159:5000/split_image', {
                 method: 'POST',
                 body: formData
             })
