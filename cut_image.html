@@ -22,10 +22,7 @@
             var formData = new FormData();
             formData.append('image', file);
 
-            var outputFolder = "path_to_your_output_folder"; // 替换为你希望保存图片的路径
-            formData.append('output_folder', outputFolder);
-
-            fetch('/split_image', {
+            fetch('http://your_server_ip:5000/split_image', {
                 method: 'POST',
                 body: formData
             })
