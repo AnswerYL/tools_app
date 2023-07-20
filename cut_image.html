@@ -22,7 +22,7 @@
             var formData = new FormData();
             formData.append('image', file);
 
-            fetch('http://139.84.166.159:5000/split_image', {
+            fetch('/split_image', {
                 method: 'POST',
                 body: formData
             })
@@ -32,6 +32,7 @@
                     alert(data.error);
                 } else {
                     displayMessage(data.message);
+                    displayImages(data.folder_path);
                 }
             })
             .catch(error => {
@@ -42,6 +43,21 @@
         function displayMessage(message) {
             var outputDiv = document.getElementById('output');
             outputDiv.innerHTML = '<p>' + message + '</p>';
+        }
+
+        function displayImages(folderPath) {
+            var imageDiv = document.createElement('div');
+            var images = '';
+
+            for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < 3; j++) {
+                    var imageUrl = folderPath + '/part_' + i + '_' + j + '.jpg';
+                    images += '<img src="' + imageUrl + '" alt="Part ' + i + '-' + j + '">';
+                }
+            }
+
+            imageDiv.innerHTML = images;
+            document.body.appendChild(imageDiv);
         }
     </script>
 </body>
